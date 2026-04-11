@@ -1,0 +1,192 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+header {
+    background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),  url('/image/hero.png');
+    background-size: cover;
+    color: white;
+    padding: 2rem;
+    text-align: center;
+    height: 350px;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+}
+
+header .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;    
+} 
+
+.header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 1000;
+}
+
+.header .watchlist-btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: white;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    border: 2px solid white;
+}
+
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Search section */
+#search-section {
+    display: flex;
+    gap: 0;
+    margin-bottom: 2rem;
+    justify-content: center;
+    position: absolute;
+    top: 390px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 75%;
+}
+
+#search-input {
+    flex: 1;
+    max-width: 500px;
+    padding: 0.7rem;
+    font-size: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+}
+
+#search-btn {
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    background-color: white;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: -9px;
+}
+
+#search-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Movie cards */
+.movie-card {
+    display: flex;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.movie-card:hover {
+    transform: translateY(-2px);
+}
+
+.movie-card img {
+    width: 120px;
+    height: 180px;
+    object-fit: cover;
+}
+
+.movie-info {
+    padding: 1rem;
+    flex: 1;
+}
+
+.movie-info h3 {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+}
+
+.movie-info p {
+    margin: 0.25rem 0;
+    color: #666;
+}
+
+/* Buttons */
+.add-btn, .remove-btn {
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+.add-btn {
+    background-color: #27ae60;
+    color: white;
+}
+
+.add-btn:hover {
+    background-color: #229954;
+}
+
+.remove-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.remove-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Results and watchlist sections */
+#results, #watchlist {
+    margin-bottom: 2rem;
+}
+
+#watchlist h2 {
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.5rem;
+}
+
+/* Error messages */
+.error {
+    color: #e74c3c;
+    font-weight: bold;
+    text-align: center;
+    padding: 1rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .movie-card {
+        flex-direction: column;
+    }
+
+    .movie-card img {
+        width: 100%;
+        height: 200px;
+    }
+
+    #search-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #search-input {
+        max-width: 100%;
+    }
+}
