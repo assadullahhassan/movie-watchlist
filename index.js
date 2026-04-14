@@ -4,13 +4,18 @@ const searchInput = document.getElementById('search-input');
 const searchBtn = document.getElementById('search-btn');
 const resultsDiv = document.getElementById('results');
 const watchlistDiv = document.getElementById('watchlist');
+const loadingDiv = document.getElementById('loading');
+const viewWatchlistBtn = document.getElementById('view-watchlist-btn');
 
 // Load watchlist from localStorage
 let watchlist = JSON.parse(localStorage.getItem('watchlist')) || [];
 
+// Store search results Array
+let movies = [];
+
 async function fetchMovies(searchTerm) {
     try {
-        const response = await fetch(`http://www.omdbapi.com/?s=${encodeURIComponent(searchTerm)}&apikey=${API_KEY}`);
+        const response = await fetch(`http://www.omdbapi.com/?s=${encodeURIComponent(searchTerm)}&page=2&apikey=${API_KEY}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -28,6 +33,16 @@ async function fetchMovies(searchTerm) {
     }
 }
 
+viewWatchlistBtn.addEventListener('click', () => {
+    if (watchlist.length === 0) {
+        alert('Your watchlist is empty');
+        return;
+    }
+    // movies = [] // Clear search results when viewing watchlist
+    clearResults();
+    displayWatchlist();
+});
+
 
 // Event listeners
 searchBtn.addEventListener('click', handleSearch);
@@ -40,16 +55,20 @@ searchInput.addEventListener('keypress', (e) => {
 // Handle search
 async function handleSearch() {
     const searchTerm = searchInput.value.trim();
+    loadingDiv.style.display = 'block';
     if (!searchTerm) {
         alert('Please enter a movie title to search');
+        loadingDiv.style.display = 'none';
         return;
     }
 
     try {
-        const movies = await fetchMovies(searchTerm);
+         movies = await fetchMovies(searchTerm);
         displayResults(movies);
     } catch (error) {
         resultsDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+    } finally {
+        loadingDiv.style.display = 'none';
     }
 }
 
@@ -71,6 +90,11 @@ function displayResults(movies) {
             </div>
         </div>
     `).join('');
+}
+
+// Clear search results
+function clearResults() {
+    resultsDiv.innerHTML = '';
 }
 
 // Add movie to watchlist
