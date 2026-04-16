@@ -6,6 +6,8 @@ const resultsDiv = document.getElementById('results');
 const watchlistDiv = document.getElementById('watchlist');
 const loadingDiv = document.getElementById('loading');
 const viewWatchlistBtn = document.getElementById('view-watchlist-btn');
+const paginationDiv = document.getElementById('pagination');
+let currentPage = 1;
 
 // Load watchlist from localStorage
 let watchlist = JSON.parse(localStorage.getItem('watchlist')) || [];
@@ -15,7 +17,7 @@ let movies = [];
 
 async function fetchMovies(searchTerm) {
     try {
-        const response = await fetch(`http://www.omdbapi.com/?s=${encodeURIComponent(searchTerm)}&page=2&apikey=${API_KEY}`);
+        const response = await fetch(`http://www.omdbapi.com/?s=${encodeURIComponent(searchTerm)}&page=${currentPage}&apikey=${API_KEY}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -25,7 +27,8 @@ async function fetchMovies(searchTerm) {
         if (data.Response === 'False') {
             throw new Error(data.Error || 'No movies found');
         }
-
+        paginationDiv.innerHTML = ''; // Clear previous pagination
+        calculateTotalPages(data.totalResults);
         return data.Search;
     } catch (error) {
         console.error('Error fetching movies:', error);
@@ -44,10 +47,16 @@ viewWatchlistBtn.addEventListener('click', () => {
 });
 
 
+
+
 // Event listeners
-searchBtn.addEventListener('click', handleSearch);
+searchBtn.addEventListener('click', () => {
+    currentPage = 1; // Reset to first page on new search
+    handleSearch()
+});
 searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
+        currentPage = 1; // Reset to first page on new search
         handleSearch();
     }
 });
@@ -126,8 +135,13 @@ async function addToWatchlist(imdbID) {
 // Display watchlist
 function displayWatchlist() {
     if (watchlist.length === 0) {
-        watchlistDiv.innerHTML = '<p>Your watchlist is empty</p>';
+        watchlistDiv.innerHTML = '<p class="error-empty-watchlist">Your watchlist is empty</p>';
+       viewWatchlistBtn.style.display = 'none';
         return;
+    }
+
+     if (movies.length !== 0) {
+            viewWatchlistBtn.style.display = 'block';
     }
 
     watchlistDiv.innerHTML = `
@@ -154,5 +168,31 @@ function removeFromWatchlist(imdbID) {
     displayWatchlist();
 }
 
+// Calculate total pages based on search results
+function calculateTotalPages(totalResults) {
+    console.log('Total Results:', Math.ceil(totalResults / 10));
+    const totalPages = Math.ceil(totalResults / 10);
+    createPagination(totalPages);
+    
+}
+
+// pagination loop
+
+function createPagination(totalPages) {
+    let paginationHTML = '';
+
+    for (let i = 1; i <= totalPages; i++) {
+        const activeClass = i === currentPage ? 'active' : '';
+        paginationHTML += `<button class="pagination-btn ${activeClass}" onclick="goToPage(${i})">${i}</button>`;
+    }
+    paginationDiv.innerHTML = paginationHTML;
+}
+
+
+// Pagination
+function goToPage(page) {
+    currentPage = page;
+    handleSearch();
+}
 // Initialize watchlist display
 displayWatchlist();

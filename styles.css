@@ -3,7 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    background-color: whitesmoke;
     color: #333;
 }
 
@@ -40,6 +40,14 @@ header .header {
     cursor: pointer;
     background-color: transparent;
     border: 2px solid white;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    display: none;
+}
+
+.watchlist-btn:hover {
+    background-color: white;
+    color: #333;
 }
 
 main {
@@ -170,6 +178,13 @@ main {
     padding: 1rem;
 }
 
+.error-empty-watchlist {
+    color: #666;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
 /* Loading */
 .loading {
     display: none;
@@ -180,6 +195,34 @@ main {
     width: 60px;
     height: 60px;
     margin: 0 auto;
+}
+
+/* Pagination */
+#pagination {
+    display: flex;
+    justify-content: left;
+    gap: 0.2rem;
+    margin-top: 1rem;
+    max-width: 100px;
+}
+
+#pagination button {
+    padding: 0.5rem 1rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#pagination button:hover {
+    background-color: #2980b9;
+}
+
+#pagination button.active {
+    background-color: #27ae60;
+    font-weight: bold;
 }
 
 /* Responsive design */
