@@ -104,6 +104,7 @@ function displayResults(movies) {
 // Clear search results
 function clearResults() {
     resultsDiv.innerHTML = '';
+    paginationDiv.innerHTML = '';
 }
 
 // Add movie to watchlist
@@ -184,6 +185,9 @@ function createPagination(totalPages) {
     for (let i = 1; i <= totalPages; i++) {
         const activeClass = i === currentPage ? 'active' : '';
         paginationHTML += `<button class="pagination-btn ${activeClass}" onclick="goToPage(${i})">${i}</button>`;
+        if (i >= 5) { // Limit to 5 pages for better UX
+            break;
+        }
     }
     paginationDiv.innerHTML = paginationHTML;
 }
