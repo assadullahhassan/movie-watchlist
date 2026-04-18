@@ -17,7 +17,7 @@ let movies = [];
 
 async function fetchMovies(searchTerm) {
     try {
-        const response = await fetch(`http://www.omdbapi.com/?s=${encodeURIComponent(searchTerm)}&page=${currentPage}&apikey=${API_KEY}`);
+        const response = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(searchTerm)}&page=${currentPage}&apikey=${API_KEY}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -116,7 +116,7 @@ async function addToWatchlist(imdbID) {
 
     try {
         // Fetch full movie details
-        const response = await fetch(`http://www.omdbapi.com/?i=${imdbID}&apikey=${API_KEY}`);
+        const response = await fetch(`https://www.omdbapi.com/?i=${imdbID}&apikey=${API_KEY}`);
         const movie = await response.json();
 
         if (movie.Response === 'False') {
